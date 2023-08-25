@@ -7,7 +7,7 @@ const gallery = document.querySelector('.gallery');
 
 let page = 1;
 let searchQuery = '';
-let totalHits = 40;
+let totalHits = 500;
 
 function updateLoadMoreButton(images) {
   if (page * 40 >= totalHits || images.length === 0) {
