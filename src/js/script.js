@@ -8,9 +8,16 @@ const gallery = document.querySelector('.gallery');
 let page = 1;
 let searchQuery = '';
 let totalHits = 500;
+const PER_PAGE = 40;
+
+function calculateTotalPages(totalHits) {
+  return Math.ceil(totalHits / PER_PAGE);
+}
 
 function updateLoadMoreButton(images) {
-  if (page * 40 >= totalHits || images.length === 0) {
+  const totalPages = calculateTotalPages(totalHits);
+
+  if (page >= totalPages || images.length === 0 || images.length < PER_PAGE) {
     btn.style.display = 'none';
     if (!images || images.length === 0) {
       Notiflix.Notify.failure(
@@ -47,6 +54,7 @@ btn.addEventListener('click', async () => {
   const images = await loadImages(searchQuery, page);
   updateLoadMoreButton(images);
 });
+
 async function loadImages(query, page) {
   try {
     const images = await fetchImages(query, page);
